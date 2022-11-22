@@ -59,7 +59,8 @@ export default class FormInput extends Component {
       messError = pureInputName + ` Không để trống`;
     } else {
       if (type === "number") {
-        let regexNumber = /^\d{4,16}$/;
+        let regexNumber =
+          /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
         if (!regexNumber.test(value)) {
           messError = pureInputName + " không hợp lệ";
         }
@@ -143,6 +144,7 @@ export default class FormInput extends Component {
               className="form-control"
               onInput={this.handleInputChange}
             />
+
             {this.state.errors.fullName !== "" && (
               <div className="text-danger mt-2">
                 *{this.state.errors.fullName}
