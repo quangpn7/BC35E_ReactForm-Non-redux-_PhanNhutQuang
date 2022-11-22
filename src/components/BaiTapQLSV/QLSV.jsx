@@ -69,7 +69,7 @@ export default class QLSV extends Component {
       let index = this.state.data.findIndex((sv) => sv.id === filledForm.id);
       let newData = [...this.state.data];
       newData[index] = filledForm;
-      console.log(newData[index]);
+
       this.saveToLocalStorage();
 
       alert("Update thành công!!!");
@@ -168,9 +168,6 @@ export default class QLSV extends Component {
       this.setState({
         data: newData,
       });
-      // console.log(index);
-      // console.log(this.state.data.splice(index, 1));
-      // this.saveToLocalStorage();
     }
   };
   resetSearch = () => {

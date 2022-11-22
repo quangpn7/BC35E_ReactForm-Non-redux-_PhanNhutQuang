@@ -25,7 +25,7 @@ export default class FormInput extends Component {
       JSON.stringify(prevProps.editSv) !== JSON.stringify(this.props.editSv)
     ) {
       let newValues = this.props.editSv;
-      console.log(newValues);
+
       this.setState({
         values: newValues,
       });
@@ -71,7 +71,6 @@ export default class FormInput extends Component {
           messError =
             pureInputName +
             " phải viết in chữ cái đầu, không có số, không có ký tự đặc biệt";
-          console.log(messError);
         }
       } else if (type === "email") {
         let regexEmail = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
@@ -107,7 +106,7 @@ export default class FormInput extends Component {
   };
   render() {
     const { handleSubmit, update, handleUpdate, deleteStudent } = this.props;
-    console.log(this.props.existedId);
+
     return (
       <div>
         <div className="row gy-3">

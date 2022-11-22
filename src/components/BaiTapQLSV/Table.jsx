@@ -6,6 +6,16 @@ export default class Table extends Component {
       this.props;
     let data = searchMode === false ? dataSv : filteredData;
 
+    if (data.length === 0) {
+      return (
+        <div className="mt-5 text-center fst-italic">
+          <h3 className="text-danger">
+            *CHƯA CÓ DỮ LIỆU HOẶC TÌM KIẾM KHÔNG TRÙNG KHỚP
+          </h3>
+        </div>
+      );
+    }
+
     return (
       <div className="mt-3">
         <div className="table-responsive">
@@ -19,7 +29,7 @@ export default class Table extends Component {
                 <th />
               </tr>
             </thead>
-            <tbody>
+            <tbody id="bodyTable">
               {data.map((sv, index) => {
                 return (
                   <tr key={index} className="text-start">
