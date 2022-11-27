@@ -194,7 +194,9 @@ export default class QLSV extends Component {
     this.getExistedId(this.state.data);
     return (
       <div>
-        <h3 className="bg-dark text-white py-2 ps-3">Thông tin sinh viên</h3>
+        <h3 className="bg-dark text-white py-2 ps-3">
+          Thông tin sinh viên (Non-redux)
+        </h3>
 
         {/* <ModalEdit /> */}
         <div className="container">
