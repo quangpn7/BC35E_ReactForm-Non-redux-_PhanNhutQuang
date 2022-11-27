@@ -1,7 +1,8 @@
-# ReactJs Form (Non-Redux)
+# ReactJs Form (Non-Redux And Redux) (Updated)
+# Documentation for Redux one is not available at the mean time
 ### By: quangpn7
 #### Date: 22 - Nov - 2022
-## Overview:
+## Overview: (Non-redux)
 - This resository contains a **`ReactJs`** App which is builed for student management.
 - There are **5 class-components** used for this app:
     - QLSV.jsx (Main component)
