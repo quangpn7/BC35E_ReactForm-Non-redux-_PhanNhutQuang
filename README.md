@@ -50,7 +50,7 @@ componenetDidUpdate(prevProps, prevState) // Use for checking if state changed, 
   - Contain too much method, states (whether refactored or not).
   - Cause difficulties in troubleshooting the componenet.
   - Methods are not structures in good order.
-- Recommend: When onpen with editor (IDE), better using `Fold` feature. In VsCode, try to use <kdb>cmd + k</kdb> <kdb>cmd + 2</kdb> (***Fold Level 2***) to have a better view on this file.
+- Recommend: When onpen with editor (IDE), better using `Fold` feature. In VsCode, try to use <kbd>cmd + k</kbd> <kbd>cmd + 2</kbd> (***Fold Level 2***) to have a better view on this file.
 ---
 ## 2. FomInput.jsx
 - Class componenet
