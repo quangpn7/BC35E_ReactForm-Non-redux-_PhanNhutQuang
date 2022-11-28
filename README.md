@@ -2,21 +2,44 @@
 # Documentation for Redux one is not available at the mean time
 ### By: quangpn7
 #### Date: 22 - Nov - 2022
-## Overview: (Non-redux)
-- This resository contains a **`ReactJs`** App which is builed for student management.
-- There are **5 class-components** used for this app:
-    - QLSV.jsx (Main component)
-    - FormInput.jsx
-    - TableFilter.jsx
-    - Table.jsx
-- There is an image that maps everything in case you want to have a broad scheme of this form app.
-- This app uses data from local storage instead of calling from API *(No dummy API could match the required so far.)*
-- This document will somehow describe this as project as follow:
-    - I. Component
-    - II. Validation
-    - III. Test case
-    - IV. Conclusion
+## Overview: 
+- ReactJs Form (Non-Redux And Redux) (Updated)
+- Documentation for Redux one is not available at the mean time
+    - By: quangpn7
+      - Date: 22 - Nov - 2022
+  - Overview:
+- Non-redux
+- I. Component
+  - 1. QLSV.**jsx** (Main component)
+      - State:
+      - Method:
+  - 2. FomInput.jsx
+      - State:
+      - Props:
+      - Method:
+  - 3. TableFilter.jsx
+      - State:
+      - Props:
+      - Method:
+  - 3. Table.jsx
+      - State:
+      - Props:
+      - Method:
+- II. Validation
+- III. Test case
+      - Testing:
+        - - id: (expected unique)
+        - - fullName:
+        - - phone:
+        - - email:
+- IV. Conclusion
+- With Redux
+- I. Component
+- II. Global State
+- III. Conclusion
+- THANKS FOR READING THIS REPOSITORY
 ---
+# Non-redux
 # I. Component
 ## 1. QLSV.**jsx** (Main component)
 - Class componenet
@@ -228,6 +251,45 @@ handleType(type) // Handle the change of searching type, set state the type as s
 - Still using DOM by querySelector for resting form and search input. Tried using `props`, `state`, `LifeCycle` features to do this but there are unexpected problem. (Try it again in later).
 - The app can be more simple if we merge `Table.jsx` and `Table.filter` together. But I prefer keep them distinct for later reviewing and maintainance.
 ---
+# With Redux
+
+# I. Component
+- With Redux, I used the same component as non-redux. Thus, I keeo this section in short and turn to the next one.
+# II. Global State
+- **dataSv**:
+  - Contains the data for table component's rendering.
+  - Change by **`add`**, **`edit`**, **`delete`** type action
+- **inputFieldReducer**:
+  - Store value input by user
+  - Quick binding value for edit data student
+- **cloneDataReducer**:
+  - Store filtered data by filtering function
+  - Change by searching
+- **isUpdate**:
+  - Let the app know which mode it is being used
+  - Change by when user pressed edit btn at table
+- **isValid**:
+  - Let the App know whether form values are all valid or not
+  - Change everytime user input
+  - ***This one need more testing** 
+  
+- **isSearching**:
+  - Change the app into searching mode
+  - when this mode is `true`, App will use the filtered data to render
+  - Change when user input search key
+---
+# III. Conclusion 
+- Changing from none-redux to redux has some specific advantage and disadvangtage
+- Non-redux:
+  - Difficulty in maintainace code
+  - Too much passing props, state, method between componenents.
+  - Folder structure is less than using with REDUX
+- With-Redux:
+  - Easy control, keep track of state
+  - Easy to get state from global store
+  - Hard to master
+  - Make folder structure more compilcated
+
 # THANKS FOR READING THIS REPOSITORY
 
 
