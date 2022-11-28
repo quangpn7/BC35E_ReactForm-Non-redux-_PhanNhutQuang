@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 // import axios from "axios";
 import FormInput from "./FormInput";
-
+//import table componenet
 import Table from "./Table";
+// import table filter component
 import TableFilter from "./TableFilter";
 
 export default class QLSV extends Component {
@@ -10,16 +11,17 @@ export default class QLSV extends Component {
     super(props);
 
     this.state = {
-      data: [],
-      filteredData: [],
-      searchMode: false,
-      searchType: "id",
-      update: false,
-      editSv: { id: "", fullName: "", phone: "", email: "" },
-      valid: false,
+      data: [], // contains data to render (main datq)
+      filteredData: [], // contains filtered data (filter from main data above and filtering condition from TableFilter.jsx)
+      searchMode: false, // sets App into search mode or normal mode, default false: normal mode
+      searchType: "id", // Search type from TableFilter.jsx to do filter fro filteredData state
+      update: false, // sets App into update mode or add mode, different button may appear more fearturely
+      editSv: { id: "", fullName: "", phone: "", email: "" }, // state for instant get and push student obj to input field
+      valid: false, // sets the valid of the form, default: false which means you cannot push new student or update student
     };
   }
-
+  //Fetch data from local storage. Please insert to your device's browser a new set of local storage with ('key: dataSv' and 'value:[...]'
+  //*IMPORTANT: you may want to import the attached JSON file named 'dataStudent.json'. Providing 20 standard sample students' info. In addition, it may help you quickly test search, edit, delete function.
   fetchData = () => {
     if (localStorage.getItem("dataSv")) {
       let localData = JSON.parse(localStorage.getItem("dataSv"));
@@ -30,9 +32,11 @@ export default class QLSV extends Component {
       } catch (error) {}
     }
   };
+  // Save to local storage method. Call this after some specific action later.
   saveToLocalStorage = () => {
     localStorage.setItem("dataSv", JSON.stringify(this.state.data));
   };
+  // Reset form method. Traditional method to reset form. At first, I use state for binding to "" but there is some problem with update function and I can figure it out. Somehow, Redux can do this better.
   resetForm = () => {
     document.querySelector("#id").value =
       document.querySelector("#fullName").value =
@@ -43,6 +47,7 @@ export default class QLSV extends Component {
       update: false,
     });
   };
+  // Handle submit method. This method help you to push the 'filledForm' a.k.a student Object (or editSv state). It will push the data directly to data state.
   handleSubmit = (filledForm) => {
     if (this.state.valid) {
       let newData = [...this.state.data, filledForm];
@@ -54,16 +59,19 @@ export default class QLSV extends Component {
       });
     }
   };
+  // Method to get valid from FormInput.jsx
   getValid = (isValid) => {
     this.setState({
       valid: isValid,
     });
   };
+  // Method to get existedId for validation check
   getExistedId = (data) => {
     return data.map((sv) => {
       return sv.id;
     });
   };
+  // Method to push new updating student info
   handleUpdate = (filledForm) => {
     if (this.state.valid) {
       let index = this.state.data.findIndex((sv) => sv.id === filledForm.id);
@@ -82,6 +90,7 @@ export default class QLSV extends Component {
       this.resetForm();
     }
   };
+  // Method DOM clicked edit at edit btn in table. Traditional DOM, because of problem I stated at line 39.
   handleEditData = (sv) => {
     document.querySelector("#id").value = sv.id;
     document.querySelector("#fullName").value = sv.fullName;
@@ -92,6 +101,7 @@ export default class QLSV extends Component {
       editSv: sv,
     });
   };
+  // Method handle search, needed key search and type of searching to filter new expected data.
   handleSearch = (searchInput, type) => {
     if (searchInput.trim() === "") {
       this.setState({
@@ -155,7 +165,7 @@ export default class QLSV extends Component {
         break;
     }
   };
-
+  // Method delete student, delete by Id
   deleteStudent = (id) => {
     let index = this.state.data.findIndex((student) => student.id === id);
     let decision = window.confirm(
@@ -170,6 +180,7 @@ export default class QLSV extends Component {
       });
     }
   };
+  // Reset input field
   resetSearch = () => {
     document.querySelector("#searchField").value = "";
     this.setState({
@@ -180,11 +191,11 @@ export default class QLSV extends Component {
   };
 
   componentDidMount() {
-    this.fetchData();
+    this.fetchData(); // fetch data from local storage once at mounting
   }
   componentDidUpdate(prevProps, prevState) {
     if (JSON.stringify(prevState.data) !== JSON.stringify(this.state.data)) {
-      this.resetForm();
+      this.resetForm(); // If state change, resetForm, saveLocal as neeeded, re-fetching
       this.saveToLocalStorage();
       this.fetchData();
     }
@@ -201,12 +212,12 @@ export default class QLSV extends Component {
         {/* <ModalEdit /> */}
         <div className="container">
           <FormInput
-            update={this.state.update}
-            existedId={this.getExistedId(this.state.data)}
-            getValid={this.getValid}
+            update={this.state.update} // let the input know update mode or not
+            existedId={this.getExistedId(this.state.data)} // for checking existed id
+            getValid={this.getValid} // form valid or not
             handleSubmit={this.handleSubmit}
             handleUpdate={this.handleUpdate}
-            editSv={this.state.editSv}
+            editSv={this.state.editSv} // get back inputField value for furthur action
             deleteStudent={this.deleteStudent}
           />
           <TableFilter
@@ -215,9 +226,9 @@ export default class QLSV extends Component {
           />
 
           <Table
-            dataSv={this.state.data}
-            searchMode={this.state.searchMode}
-            filteredData={this.state.filteredData}
+            dataSv={this.state.data} // data for render
+            searchMode={this.state.searchMode} // search mode to let the component decide which data to render
+            filteredData={this.state.filteredData} // filtered data by search input
             deleteStudent={this.deleteStudent}
             handleEditData={this.handleEditData}
           />

@@ -11,11 +11,14 @@ class Table extends Component {
   }
   // Handle edit student
   handleEditBtn = (student) => {
+    this.props.resetMessErorr();
     this.props.editStudent(student);
   };
   //Handle delete student
   handleDeleteBtn = (id) => {
-    this.props.deleteStudent(id);
+    if (window.confirm(`Xác nhận xoá sinh viên có ID: ${id}`)) {
+      this.props.deleteStudent(id);
+    }
   };
 
   render() {

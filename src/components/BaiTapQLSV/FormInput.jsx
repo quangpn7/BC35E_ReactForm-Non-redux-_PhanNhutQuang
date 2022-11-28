@@ -6,22 +6,25 @@ export default class FormInput extends Component {
 
     this.state = {
       values: {
+        //state forms the student information to obj for further action
         id: "",
         fullName: "",
         phone: "",
         email: "",
       },
       errors: {
+        // state to store the errors
         id: "",
         fullName: "",
         phone: "",
         email: "",
       },
-      valid: false,
+      valid: false, // state valid or not for action
     };
   }
   componentDidUpdate(prevProps, prevState) {
     if (
+      // if props from QLSV.jsx changes, setState the values as new one pushed down
       JSON.stringify(prevProps.editSv) !== JSON.stringify(this.props.editSv)
     ) {
       let newValues = this.props.editSv;
@@ -31,10 +34,11 @@ export default class FormInput extends Component {
       });
     }
     if (prevState.valid !== this.state.valid) {
-      this.props.getValid(this.state.valid);
+      this.props.getValid(this.state.valid); // if valid in this componenent changed, then the one at QLSV.jsx changed too
     }
   }
   isValid = () => {
+    // Loop for checking valdation.
     let { values, errors } = this.state;
     for (let key in errors) {
       if (errors[key] !== "" || values[key] === "") {
@@ -43,28 +47,31 @@ export default class FormInput extends Component {
     }
     return true;
   };
-
+  // method gets value and validation at time
   handleInputChange = (e) => {
     let { value, id } = e.target;
     let pureInputName = e.target.getAttribute("data-purename");
     let type = e.target.getAttribute("data-type");
     //Hanle input value
-    let newValues = this.state.values;
+    let newValues = { ...this.state.values }; //clone new one for mutating
     newValues[id] = value;
     //Handle error/valid
-    let newErrors = this.state.errors;
+    let newErrors = { ...this.state.errors }; // clone new error
     let messError = "";
 
     if (value.trim() === "") {
+      //no blank
       messError = pureInputName + ` Không để trống`;
     } else {
       if (type === "number") {
+        //phone number
         let regexNumber =
           /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
         if (!regexNumber.test(value)) {
           messError = pureInputName + " không hợp lệ";
         }
       } else if (type === "name") {
+        //name
         let regexName = new RegExp(
           /^[A-Za-z ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễếệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ]+$/
         );
@@ -74,11 +81,13 @@ export default class FormInput extends Component {
             " phải viết in chữ cái đầu, không có số, không có ký tự đặc biệt";
         }
       } else if (type === "email") {
+        // email
         let regexEmail = new RegExp(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/);
         if (!regexEmail.test(value)) {
           messError = pureInputName + " không hợp lệ";
         }
       } else if (type === "id") {
+        // id
         for (let existedId of this.props.existedId) {
           if (value === existedId) {
             messError = pureInputName + " đã tồn tại";

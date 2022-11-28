@@ -4,9 +4,10 @@ export default class Table extends Component {
   render() {
     const { dataSv, deleteStudent, handleEditData, searchMode, filteredData } =
       this.props;
-    let data = searchMode === false ? dataSv : filteredData;
+    let data = searchMode === false ? dataSv : filteredData; // if app is at searching mode, it will use filterdData to render
 
     if (data.length === 0) {
+      // if returned data = [] => render this one
       return (
         <div className="mt-5 text-center fst-italic">
           <h3 className="text-danger">

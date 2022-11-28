@@ -13,13 +13,14 @@ let saveToLocalStorage = (newData) => {
 //Asign data from local to Redux store
 const stateDefault = [...fetchData()];
 //clone use for filter search that not effect to main data
-const cloneData = [...stateDefault];
 // Export dataSv as state in global store
 export const dataSv = (state = stateDefault, action) => {
   switch (action.type) {
     case "ADD_NEW_STUDENT": {
-      saveToLocalStorage([...stateDefault, action.student]);
-      return [...stateDefault, action.student];
+      const cloneData = [...stateDefault];
+
+      saveToLocalStorage([...cloneData, action.student]);
+      return [...cloneData, action.student];
     }
     case "UPDATE_STUDENT": {
       let index = stateDefault.findIndex((sv) => sv.id === action.student.id);
@@ -31,9 +32,11 @@ export const dataSv = (state = stateDefault, action) => {
     }
     case "DELETE_STUDENT": {
       let index = stateDefault.findIndex((sv) => sv.id === action.id);
-      stateDefault.splice(index, 1);
-      saveToLocalStorage(stateDefault);
-      return stateDefault;
+      const cloneData = [...stateDefault];
+
+      cloneData.splice(index, 1);
+      saveToLocalStorage(cloneData);
+      return cloneData;
     }
 
     default:

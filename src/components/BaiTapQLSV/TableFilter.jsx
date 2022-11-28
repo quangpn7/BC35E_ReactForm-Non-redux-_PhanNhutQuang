@@ -5,8 +5,8 @@ export default class TableFilter extends Component {
     super(props);
 
     this.state = {
-      searchKey: "",
-      searchType: "id",
+      searchKey: "", // searckey get from the input field
+      searchType: "id", // search type get from select
     };
   }
   handleInput = (key) => {

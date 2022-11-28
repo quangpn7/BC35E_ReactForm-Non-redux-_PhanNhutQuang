@@ -8,6 +8,7 @@ class FormInput extends Component {
     super(props);
 
     this.state = {
+      //use this as local state for simplying the redux state
       valid: false,
       messErrorSet: {
         id: "",
@@ -20,6 +21,7 @@ class FormInput extends Component {
   //Method set valid
 
   isValid = () => {
+    // check valid
     let inputField = this.props.inputFieldReducer;
     let clonedState = { ...this.state.messErrorSet };
     for (let key in clonedState) {
@@ -30,6 +32,7 @@ class FormInput extends Component {
     return true;
   };
   componentDidUpdate(prevProps, prevState) {
+    // set valid constantly whenever the state changes
     if (JSON.stringify(prevState) !== JSON.stringify(this.state)) {
       this.setState({
         valid: this.isValid(),
@@ -37,6 +40,7 @@ class FormInput extends Component {
     }
     if (prevProps.inputFieldReducer !== this.props.inputFieldReducer) {
       this.setState({
+        // so does the props from REDUX
         valid: this.isValid(),
       });
     }
@@ -110,14 +114,29 @@ class FormInput extends Component {
   //Method update student
   editStudent = (student) => {
     if (this.state.valid) {
-      this.props.editStudent(student);
+      let confirm = window.confirm("Xác nhận chỉnh sửa. Đồng ý để tiếp tục!!");
+      if (confirm) {
+        this.props.editStudent(student);
+      }
+      return;
     }
   };
   //Method delete student
   deleteStudent = (id) => {
-    this.props.deleteStudent(id);
+    if (window.confirm(`Xác nhận xoá sinh viên có ID: ${id}`)) {
+      this.props.deleteStudent(id);
+    }
   };
-
+  resetMessError = () => {
+    this.setState({
+      messErrorSet: {
+        id: "",
+        fullName: "",
+        phone: "",
+        email: "",
+      },
+    });
+  };
   render() {
     let { inputFieldReducer, isUpdate } = this.props;
     let { fullName, id, phone, email } = this.state.messErrorSet;
@@ -215,13 +234,14 @@ class FormInput extends Component {
           </button>
         )}
         <TableFilter />
-        <Table />
+        <Table resetMessErorr={this.resetMessError} />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
+  // connect from the redux store to props
   return {
     dataSv: state.dataSv,
     inputFieldReducer: state.inputFieldReducer,
